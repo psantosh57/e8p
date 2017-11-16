@@ -26,7 +26,7 @@ Node definition
 class node {
 public:
 
-	node(const int arr[N][N]) : _matrix(nullptr) {
+	node(const int arr[N][N]) : _matrix{ 0 } {
 
 		cout << "In node const" << endl;
 
@@ -45,9 +45,25 @@ public:
 		cout << "In node dest" << endl;
 	}
 
+	bool operator==(const node& n1) {
+
+		for (int i = 0; i < N; i++) {
+
+			for (int j = 0; j < N; j++) {
+
+				if (_matrix[i][j] != n1._matrix[i][j]) {
+
+					return false;
+				}
+			}
+		}
+
+		return true;
+	}
+
 private:
 
-	int **_matrix;
+	int _matrix[N][N];
 };
 
 
@@ -75,6 +91,11 @@ public:
 
 	friend class node;
 
+	bool operator==(const board& b1) {
+
+		return (_n == b1._n);
+	}
+
 private:
 
 	node _n; 
@@ -96,6 +117,15 @@ public:
   e8p(const int s[N][N], const int f[N][N]) : _start(s), _finish(f) {
   
 	  cout << "In e8p const" << endl;
+
+	  if (isEqual()) {
+
+		  cout << "Both matrices are equal!" << endl;
+	  }
+	  else {
+
+		  cout << "Not equal!" << endl;
+	  }
   
   }
 
@@ -111,10 +141,18 @@ public:
 
   friend class board;
 
+  bool isEqual() {
+
+	  return (_start == _finish);
+  }
+  
+
 private:
 
 	board _start;
 	board _finish;
+
+
  
 };
 
