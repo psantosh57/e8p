@@ -114,7 +114,7 @@ class e8p{
 public:
   static const int N = 3 ;
   
-  e8p(const int s[N][N], const int f[N][N]) : _start(s), _finish(f) {
+  e8p(const int s[N][N], const int f[N][N]) : _start(s), _finish(f), _numMoves(0), _solution("") {
   
 	  cout << "In e8p const" << endl;
 
@@ -151,6 +151,8 @@ private:
 
 	board _start;
 	board _finish;
+	int _numMoves;
+	string _solution;
 
 
  
