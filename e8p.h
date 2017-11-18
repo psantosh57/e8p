@@ -1,10 +1,11 @@
+#pragma once
 /*----------------------------------------------------------------
 Copyright (c) 2017 Author: Jagadeesh Vasudevamurthy
 file: e8p.h
 -----------------------------------------------------------------*/
 
 /*----------------------------------------------------------------
-This file has e8p class declaration 
+This file has e8p class declaration
 -----------------------------------------------------------------*/
 
 /*----------------------------------------------------------------
@@ -18,7 +19,10 @@ All includes here
 #include <queue>
 #include <string>
 
+
 static const int N = 3;
+
+
 
 /*----------------------------------------------------------------
 Node definition
@@ -61,6 +65,9 @@ public:
 		return true;
 	}
 
+	friend class board;
+	friend class e8p;
+
 private:
 
 	int _matrix[N][N];
@@ -71,12 +78,12 @@ private:
 /*----------------------------------------------------------------
 Declaration of board
 -----------------------------------------------------------------*/
-class board{
+class board {
 public:
 
 	board(const int arr1[N][N]) : _n(arr1), _up(nullptr), _down(nullptr), _left(nullptr), _right(nullptr) {
 
-		cout << "In board const" << endl; 
+		cout << "In board const" << endl;
 
 	}
 
@@ -90,62 +97,71 @@ public:
 	}
 
 	friend class node;
+	friend class e8p;
 
 	bool operator==(const board& b1) {
 
 		return (_n == b1._n);
 	}
 
+
 private:
 
-	node _n; 
+	node _n;
 
 	node* _up;
 	node* _down;
 	node* _left;
 	node* _right;
-  
+
 };
 
 /*----------------------------------------------------------------
 Declaration of e8p class
 -----------------------------------------------------------------*/
-class e8p{
+class e8p {
 public:
-  static const int N = 3 ;
-  
-  e8p(const int s[N][N], const int f[N][N]) : _start(s), _finish(f), _numMoves(0), _solution("") {
-  
-	  cout << "In e8p const" << endl;
+	static const int N = 3;
 
-	  if (isEqual()) {
+	e8p(const int s[N][N], const int f[N][N]) : _start(s), _finish(f), _numMoves(0), _solution("") {
 
-		  cout << "Both matrices are equal!" << endl;
-	  }
-	  else {
+		cout << "In e8p const" << endl;
 
-		  cout << "Not equal!" << endl;
-	  }
-  
-  }
+		if (isEqual()) {
 
-  ~e8p() {
+			cout << "Both matrices are equal!" << endl;
+		}
+		else {
 
-	  cout << "In e8p dest" << endl;
-  }
+			cout << "Not equal!" << endl;
+		}
 
-  e8p(const e8p& from) = delete;
-  e8p& operator=(const e8p& from) = delete;
-  int get_num_moves() const ;
-  string get_solution() const ;
+	}
 
-  friend class board;
+	~e8p() {
 
-  bool isEqual() {
+		cout << "In e8p dest" << endl;
+	}
 
-	  return (_start == _finish);
-  }
-  
+	e8p(const e8p& from) = delete;
+	e8p& operator=(const e8p& from) = delete;
+	int get_num_moves() const;
+	string get_solution() const;
+
+	friend class board;
+
+	bool isEqual() {
+
+		return (_start == _finish);
+	}
+
+	//int getKeyForBoard(board b);
+
+	struct hash {
+
+	int getKeyForBoard(board b);
+
+};
 
 private:
 
@@ -154,12 +170,15 @@ private:
 	int _numMoves;
 	string _solution;
 
+	
 
- 
+
+
 };
 
 
 
 #endif
 //EOF
+
 

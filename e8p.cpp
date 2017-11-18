@@ -23,5 +23,20 @@ string e8p::get_solution() const {
 }
 
 
+int e8p::hash::getKeyForBoard(board b) {
+
+	int sum = 0;
+
+	for (int i = 0; i < N; ++i) {
+
+		for (int j = 0; j < N; ++j) {
+
+			sum += ((i*N) + j) * b._n._matrix[i][j];
+		}
+	}
+
+	return sum;
+}
+
 //EOF
 
