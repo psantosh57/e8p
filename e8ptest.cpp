@@ -268,10 +268,6 @@ int main() {
 
 	e8p e(s, f);
 
-	unordered_set <board, e8p::hash> uset;
-
-	cout << "Hash for s is " << e.getKeyForBoard(s) << endl;
-
 	return 0;
 }
 

@@ -12,6 +12,15 @@ All includes here
 -----------------------------------------------------------------*/
 #include "e8p.h"
 
+e8p::e8p(const int s[N][N], const int f[N][N]) : _start(s), _finish(f), _numMoves(0), _solution("") {
+
+	unordered_set <board, hash> uset;
+
+	uset.insert(_start);
+
+
+}
+
 int e8p::get_num_moves() const {
 
 	return 0;
@@ -22,6 +31,7 @@ string e8p::get_solution() const {
 	return " ";
 }
 
+#if 0
 
 int e8p::hash::getKeyForBoard(board b) {
 
@@ -37,6 +47,8 @@ int e8p::hash::getKeyForBoard(board b) {
 
 	return sum;
 }
+#endif // 0
+
 
 //EOF
 

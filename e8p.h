@@ -16,6 +16,7 @@ All includes here
 
 #include "../util/util.h"
 #include <unordered_map>
+#include <unordered_set>
 #include <queue>
 #include <string>
 
@@ -49,7 +50,7 @@ public:
 		cout << "In node dest" << endl;
 	}
 
-	bool operator==(const node& n1) {
+	bool operator==(const node& n1) const {
 
 		for (int i = 0; i < N; i++) {
 
@@ -99,7 +100,7 @@ public:
 	friend class node;
 	friend class e8p;
 
-	bool operator==(const board& b1) {
+	bool operator==(const board& b1) const {
 
 		return (_n == b1._n);
 	}
@@ -123,20 +124,7 @@ class e8p {
 public:
 	static const int N = 3;
 
-	e8p(const int s[N][N], const int f[N][N]) : _start(s), _finish(f), _numMoves(0), _solution("") {
-
-		cout << "In e8p const" << endl;
-
-		if (isEqual()) {
-
-			cout << "Both matrices are equal!" << endl;
-		}
-		else {
-
-			cout << "Not equal!" << endl;
-		}
-
-	}
+	e8p(const int s[N][N], const int f[N][N]);
 
 	~e8p() {
 
@@ -159,9 +147,23 @@ public:
 
 	struct hash {
 
-	int getKeyForBoard(board b);
+		size_t operator() (board& b) {
 
-};
+			int sum = 0;
+
+			for (int i = 0; i < N; ++i) {
+
+				for (int j = 0; j < N; ++j) {
+
+					sum += ((i*N) + j) * b._n._matrix[i][j];
+				}
+			}
+
+			return sum;
+
+		} 
+
+	};
 
 private:
 
