@@ -105,15 +105,20 @@ public:
 		return (_n == b1._n);
 	}
 
+	bool operator!=(const board& b1) const {
+
+		return !(_n == b1._n);
+	}
+
 
 private:
 
 	node _n;
 
-	node* _up;
-	node* _down;
-	node* _left;
-	node* _right;
+	board* _up;
+	board* _down;
+	board* _left;
+	board* _right;
 
 };
 
@@ -135,6 +140,9 @@ public:
 	e8p& operator=(const e8p& from) = delete;
 	int get_num_moves() const;
 	string get_solution() const;
+	void pushCombos(queue<board> & q, board& b);
+	void findSpace(board& b, int& row, int& column);
+	board* swap(board& b, int r, int c, const char* str);
 
 	friend class board;
 
@@ -142,12 +150,10 @@ public:
 
 		return (_start == _finish);
 	}
-
-	//int getKeyForBoard(board b);
-
+	
 	struct hash {
 
-		size_t operator() (board& b) {
+		inline size_t operator() (const board& b) const {
 
 			int sum = 0;
 
@@ -161,9 +167,13 @@ public:
 
 			return sum;
 
-		} 
+		}
 
 	};
+
+	
+
+
 
 private:
 
@@ -171,14 +181,13 @@ private:
 	board _finish;
 	int _numMoves;
 	string _solution;
+	bool _foundSolution;
 
 	
 
 
 
 };
-
-
 
 #endif
 //EOF
