@@ -31,7 +31,7 @@ Node definition
 class node {
 public:
 
-	node(const int arr[N][N]) : _matrix{ 0 } {
+	node(const int arr[N][N]) : _matrix{ 0 }, _up(nullptr), _down(nullptr), _left(nullptr), _right(nullptr), _parent(nullptr) {
 
 		cout << "In node const" << endl;
 
@@ -48,6 +48,12 @@ public:
 	~node() {
 
 		cout << "In node dest" << endl;
+	}
+
+	node(const node& n1) {
+
+		cout << "In node copy const" << endl;
+
 	}
 
 	bool operator==(const node& n1) const {
@@ -72,6 +78,12 @@ public:
 private:
 
 	int _matrix[N][N];
+
+	node* _up;
+	node* _down;
+	node* _left;
+	node* _right;
+	node* _parent;
 };
 
 
@@ -82,7 +94,7 @@ Declaration of board
 class board {
 public:
 
-	board(const int arr1[N][N]) : _n(arr1), _up(nullptr), _down(nullptr), _left(nullptr), _right(nullptr) {
+	board(const int arr1[N][N]) : _n(arr1), _string("") {
 
 		cout << "In board const" << endl;
 
@@ -91,10 +103,12 @@ public:
 	~board() {
 
 		cout << "In board dest" << endl;
-		_up = nullptr;
-		_down = nullptr;
-		_left = nullptr;
-		_right = nullptr;
+	}
+
+	board (const board& b1) : _n(b1._n) {
+
+		cout << "In board copy const" << endl;
+		
 	}
 
 	friend class node;
@@ -114,11 +128,7 @@ public:
 private:
 
 	node _n;
-
-	board* _up;
-	board* _down;
-	board* _left;
-	board* _right;
+	string _string;
 
 };
 
@@ -142,7 +152,10 @@ public:
 	string get_solution() const;
 	void pushCombos(queue<board> & q, board& b);
 	void findSpace(board& b, int& row, int& column);
-	board* swap(board& b, int r, int c, const char* str);
+	node* swapDown(board& b, int r, int c, queue<board>& q);
+	node* swapUp(board& b, int r, int c);
+	node* swapLeft(board& b, int r, int c);
+	node* swapRight(board& b, int r, int c);
 
 	friend class board;
 

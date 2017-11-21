@@ -61,9 +61,9 @@ void e8p::pushCombos(queue<board> & q, board& b) {
 	int column = 0;
 	findSpace(b, row, column);
 
-	if (row == 1) {
-
-		b._down = swap(b, row, column, "down");
+	if (row == 0) {
+		
+		b._n._down = swapDown(b, row, column, q);
 	}
 
 }
@@ -82,11 +82,20 @@ void e8p::findSpace(board& b, int& row, int& column) {
 			}
 		}
 	}
-
+	 
 }
 
-board* e8p::swap(board& b, int r, int c, const char* str) {
+node* e8p::swapDown(board& b, int r, int c, queue<board>& q) {
 
+	board down(b);
+
+	int temp = down._n._matrix[r][c];
+	down._n._matrix[r][c] = down._n._matrix[r+1][c];
+	down._n._matrix[r + 1][c] = temp;
+
+	down._n._parent = &(b._n);
+	b._n._down = &(down._n);
+	down._string = b._string + "D";
 
 }
 
