@@ -18,6 +18,7 @@ All includes here
 #include <unordered_map>
 #include <unordered_set>
 #include <queue>
+#include <stack>
 #include <string>
 
 
@@ -31,7 +32,7 @@ Node definition
 class node {
 public:
 
-	node(const int arr[N][N]) : _matrix{ 0 }, _up(nullptr), _down(nullptr), _left(nullptr), _right(nullptr), _parent(nullptr) {
+	node(const int arr[N][N]) : _matrix{ 0 } {
 
 		cout << "In node const" << endl;
 
@@ -79,11 +80,14 @@ private:
 
 	int _matrix[N][N];
 
+#if 0
 	node* _up;
 	node* _down;
 	node* _left;
 	node* _right;
 	node* _parent;
+#endif // 0
+
 };
 
 
@@ -94,10 +98,10 @@ Declaration of board
 class board {
 public:
 
-	board(const int arr1[N][N]) : _n(arr1), _string("") {
+	board(const int arr1[N][N]) : _n(arr1), _string(""), _up(nullptr), _down(nullptr), _left(nullptr), _right(nullptr), _parent(nullptr) {
 
 		cout << "In board const" << endl;
-
+		
 	}
 
 	~board() {
@@ -124,11 +128,44 @@ public:
 		return !(_n == b1._n);
 	}
 
+	board* createBoard();
+	void popoulateKids(int r, int c);
+	//void findSpace(int& row, int& column);
+	void swapDown(int r, int c);
+	void swapUp(int r, int c);
+	void swapLeft(int r, int c);
+	void swapRight(int r, int c);
+
+	struct hash {
+
+		inline size_t operator() (const board& b) const {
+
+			int sum = 0;
+
+			for (int i = 0; i < N; ++i) {
+
+				for (int j = 0; j < N; ++j) {
+
+					sum += ((i*N) + j) * b._n._matrix[i][j];
+				}
+			}
+
+			return sum;
+
+		}
+
+	};
 
 private:
 
 	node _n;
 	string _string;
+
+	board* _up;
+	board* _down;
+	board* _left;
+	board* _right;
+	board* _parent;
 
 };
 
@@ -150,12 +187,17 @@ public:
 	e8p& operator=(const e8p& from) = delete;
 	int get_num_moves() const;
 	string get_solution() const;
-	void pushCombos(queue<board> & q, board& b);
+	//void pushCombos(queue<board> & q, board& b);
 	void findSpace(board& b, int& row, int& column);
-	node* swapDown(board& b, int r, int c, queue<board>& q);
+	void popoulateKids(board& b, int r, int c);
+	void pushInStack(board& b, stack<board*>& s, unordered_set<board, board::hash>& us);
+#if 0
+	void swapDown(board& b, int r, int c, queue<board>& q);
 	node* swapUp(board& b, int r, int c);
 	node* swapLeft(board& b, int r, int c);
 	node* swapRight(board& b, int r, int c);
+#endif // 0
+
 
 	friend class board;
 
@@ -164,6 +206,8 @@ public:
 		return (_start == _finish);
 	}
 	
+
+#if 0
 	struct hash {
 
 		inline size_t operator() (const board& b) const {
@@ -183,6 +227,8 @@ public:
 		}
 
 	};
+#endif // 0
+
 
 	
 
