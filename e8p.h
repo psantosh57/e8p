@@ -51,14 +51,26 @@ public:
 		cout << "In node dest" << endl;
 	}
 
+#if 1
 	node(const node& n1) {
 
 		cout << "In node copy const" << endl;
 
+		for (int i = 0; i < N; ++i) {
+
+			for (int j = 0; j < N; ++j) {
+
+				_matrix[i][j] = n1._matrix[i][j];
+
+			}
+		}
+
 	}
+#endif // 0
+
 
 	bool operator==(const node& n1) const {
-
+		cout << "In node == operator" << endl;
 		for (int i = 0; i < N; i++) {
 
 			for (int j = 0; j < N; j++) {
@@ -109,17 +121,27 @@ public:
 		cout << "In board dest" << endl;
 	}
 
-	board (const board& b1) : _n(b1._n) {
+
+	board(const board& b1) : _n(b1._n) {
 
 		cout << "In board copy const" << endl;
-		
+
+		_string = b1._string;
+		_up = b1._up;
+		_down = b1._down;
+		_left = b1._left;
+		_right = b1._right;
+		_parent = b1._parent;
+
 	}
+
+
 
 	friend class node;
 	friend class e8p;
 
 	bool operator==(const board& b1) const {
-
+		cout << "In board == operator" << endl;
 		return (_n == b1._n);
 	}
 
@@ -136,7 +158,7 @@ public:
 	void swapLeft(int r, int c);
 	void swapRight(int r, int c);
 
-#if 0
+#if 1
 	struct hash {
 
 		inline int operator() (const board& b) const {
@@ -193,7 +215,7 @@ public:
 	//void pushCombos(queue<board> & q, board& b);
 	void findSpaceAndPopulate(board& b, int& row, int& col);
 	void popoulateKids(board& b, int row, int col);
-	//void pushInStack(board& b, stack<board*>& s, unordered_set<board, board::hash>& us);
+	void pushInStack(board& b, stack<board*>& s, unordered_set<board, board::hash>& us);
 #if 0
 	void swapDown(board& b, int r, int c, queue<board>& q);
 	node* swapUp(board& b, int r, int c);
@@ -211,10 +233,13 @@ public:
 	
 
 #if 0
-	struct Hash {
+	struct hash {
 
 		inline size_t operator() (const board& b) const {
 
+			
+
+#if 1
 			int sum = 0;
 
 			for (int i = 0; i < N; ++i) {
@@ -225,7 +250,10 @@ public:
 				}
 			}
 
+			cout << "HEREH!!!! - " <<sum<< endl;
+
 			return (sum);
+#endif // 0
 
 		}
 
@@ -251,10 +279,34 @@ private:
 
 };
 
+#if 0
+
+	struct hashBoard {
+
+		inline size_t operator() (const board& b) const {
+
+			cout << "In hash function" << endl;
 #if 1
+			int sum = 0;
 
-using namespace std;
+			for (int i = 0; i < N; ++i) {
 
+				for (int j = 0; j < N; ++j) {
+
+					sum += ((i*N) + j) * b._n._matrix[i][j];
+				}
+			}
+
+			return (sum);
+#endif // 0
+
+			//char* ch = reinterpret_cast<char* const>(&b);
+
+		}
+
+	};
+
+#if 0
 struct Hash {
 
 public:
@@ -280,6 +332,8 @@ public:
 	}
 
 };
+#endif // 0
+
 #endif // 0
 
 

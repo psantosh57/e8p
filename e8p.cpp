@@ -16,28 +16,18 @@ e8p::e8p(const int s[N][N], const int f[N][N]) : _start(s), _finish(f), _numMove
 
 	if (_start != _finish) {
 
-		unordered_set <board, Hash> uset;
+		unordered_set <board, board::hash> uset;
 		//queue<board*> queue;
 		stack<board*> stack;
 
 		//Push the first board in hash 
 		uset.insert(_start);
-		unordered_set<board, Hash>::const_iterator got = uset.find(_start);
-		unordered_set<board, Hash>::const_iterator not = uset.end();
-		cout << "Num elements = " << uset.size() << endl;
-		if (got == uset.end()) {
-
-			cout << "Dont come here" << endl;
-		}
-		else {
-
-			cout << "Should come here" << endl;
-		}
+		unordered_set<board, board::hash>::const_iterator got = uset.find(_start);
 
 		int row = 0;
 		int col = 0;
 		findSpaceAndPopulate(_start, row, col);
-		//pushInStack(_start, stack, uset);
+		pushInStack(_start, stack, uset);
 
 		cout << "Here" << endl;
 
@@ -207,7 +197,7 @@ board* board::createBoard() {
 	return temp;
 }
 
-#if 0
+#if 1
 void e8p::pushInStack(board& b, stack<board*>& stack, unordered_set <board, board::hash>& uset) {
 
 	if (b._up) {
