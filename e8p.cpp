@@ -17,8 +17,8 @@ e8p::e8p(const int s[N][N], const int f[N][N]) : _start(s), _finish(f), _numMove
 	if (_start != _finish) {
 
 		unordered_set <board, board::hash> uset;
-		//queue<board*> queue;
-		stack<board*> stack;
+		queue<board*> queue;
+		//stack<board*> stack;
 
 		//Push the first board in hash 
 		uset.insert(_start);
@@ -27,17 +27,21 @@ e8p::e8p(const int s[N][N], const int f[N][N]) : _start(s), _finish(f), _numMove
 		int row = 0;
 		int col = 0;
 		findSpaceAndPopulate(_start, row, col);
-		pushInStack(_start, stack, uset);
+		//pushInStack(_start, stack, uset);
+		pushInStack(_start, queue, uset);
 
 		cout << "Here" << endl;
 
 		board* parent = &_start;
 		_solution = _start._string;
 
-		while (!stack.empty()) {
+		while (!queue.empty()) {
 
-			board* temp = stack.top();
-			stack.pop();
+			//board* temp = stack.top();
+			//stack.pop();
+			board* temp = queue.front();
+			queue.pop();
+
 			_numMoves++;
 			
 
@@ -50,6 +54,7 @@ e8p::e8p(const int s[N][N], const int f[N][N]) : _start(s), _finish(f), _numMove
 			else {
 				findSpaceAndPopulate(*temp, row, col);
 				//pushInStack(*temp, stack, uset);
+				pushInStack(*temp, queue, uset);
 			}
 
 #if 0
@@ -198,7 +203,7 @@ board* board::createBoard() {
 }
 
 #if 1
-void e8p::pushInStack(board& b, stack<board*>& stack, unordered_set <board, board::hash>& uset) {
+void e8p::pushInStack(board& b, queue<board*>& stack, unordered_set <board, board::hash>& uset) {
 
 	if (b._up) {
 		unordered_set<board, board::hash>::const_iterator got = uset.find(*(b._up));

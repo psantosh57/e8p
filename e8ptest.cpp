@@ -213,8 +213,9 @@ int main() {
 		test1(s, f);
 	}
 
+#endif //0
 
-
+#if 0
 	{
 		int s[N][N] = { { 1,2,3 },
 		{ 4,5,6 },
@@ -223,18 +224,28 @@ int main() {
 		test1(s, f);
 	}
 #endif // 0
-
+#if 0
 	{
-		int s[N][N] = { { 1,8,4 },
-		{ 3,7,0 },
-		{ 5,6,2 }
+
+		int s[N][N] = { { 1,2,3 },
+{ 4,5,0 },
+{ 7,8,6 }
 		};
+#endif // 0
+
+#if 0
+		int s[N][N] = { { 4,1,3 },
+{ 7,0,5 },
+{ 8,2,6 }
+		};
+
+
 
 
 		test1(s, f);
 	}
-
-#if 0
+#endif // 0
+#if 1
 	{
 		const int m = 100;
 
@@ -277,7 +288,7 @@ int main() {
 
 #endif // 0
 
-	return 0;
+ 	return 0;
 }
 
 //EOF

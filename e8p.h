@@ -34,7 +34,7 @@ public:
 
 	node(const int arr[N][N]) : _matrix{ 0 } {
 
-		cout << "In node const" << endl;
+		//cout << "In node const" << endl;
 
 		for (int i = 0; i < N; ++i) {
 
@@ -48,13 +48,13 @@ public:
 
 	~node() {
 
-		cout << "In node dest" << endl;
+		//cout << "In node dest" << endl;
 	}
 
 #if 1
 	node(const node& n1) {
 
-		cout << "In node copy const" << endl;
+		//cout << "In node copy const" << endl;
 
 		for (int i = 0; i < N; ++i) {
 
@@ -70,7 +70,7 @@ public:
 
 
 	bool operator==(const node& n1) const {
-		cout << "In node == operator" << endl;
+		//cout << "In node == operator" << endl;
 		for (int i = 0; i < N; i++) {
 
 			for (int j = 0; j < N; j++) {
@@ -112,19 +112,19 @@ public:
 
 	board(const int arr1[N][N]) : _n(arr1), _string(""), _up(nullptr), _down(nullptr), _left(nullptr), _right(nullptr), _parent(nullptr) {
 
-		cout << "In board const" << endl;
+		//cout << "In board const" << endl;
 		
 	}
 
 	~board() {
 
-		cout << "In board dest" << endl;
+		//cout << "In board dest" << endl;
 	}
 
 
 	board(const board& b1) : _n(b1._n) {
 
-		cout << "In board copy const" << endl;
+		//cout << "In board copy const" << endl;
 
 		_string = b1._string;
 		_up = b1._up;
@@ -141,7 +141,7 @@ public:
 	friend class e8p;
 
 	bool operator==(const board& b1) const {
-		cout << "In board == operator" << endl;
+		//cout << "In board == operator" << endl;
 		return (_n == b1._n);
 	}
 
@@ -205,7 +205,7 @@ public:
 
 	~e8p() {
 
-		cout << "In e8p dest" << endl;
+		//cout << "In e8p dest" << endl;
 	}
 
 	e8p(const e8p& from) = delete;
@@ -215,7 +215,8 @@ public:
 	//void pushCombos(queue<board> & q, board& b);
 	void findSpaceAndPopulate(board& b, int& row, int& col);
 	void popoulateKids(board& b, int row, int col);
-	void pushInStack(board& b, stack<board*>& s, unordered_set<board, board::hash>& us);
+	//void pushInStack(board& b, stack<board*>& s, unordered_set<board, board::hash>& us);
+	void pushInStack(board& b, queue<board*>& s, unordered_set<board, board::hash>& us);
 #if 0
 	void swapDown(board& b, int r, int c, queue<board>& q);
 	node* swapUp(board& b, int r, int c);
@@ -278,63 +279,6 @@ private:
 
 
 };
-
-#if 0
-
-	struct hashBoard {
-
-		inline size_t operator() (const board& b) const {
-
-			cout << "In hash function" << endl;
-#if 1
-			int sum = 0;
-
-			for (int i = 0; i < N; ++i) {
-
-				for (int j = 0; j < N; ++j) {
-
-					sum += ((i*N) + j) * b._n._matrix[i][j];
-				}
-			}
-
-			return (sum);
-#endif // 0
-
-			//char* ch = reinterpret_cast<char* const>(&b);
-
-		}
-
-	};
-
-#if 0
-struct Hash {
-
-public:
-
-	size_t operator() (const board& b) const {
-
-#if 1
-		int sum = 0;
-
-		for (int i = 0; i < N; ++i) {
-
-			for (int j = 0; j < N; ++j) {
-
-				sum += ((i*N) + j) * b._n._matrix[i][j];
-			}
-		}
-
-		return (sum);
-#endif // 0
-
-		//char* ch = reinterpret_cast<char* const>(&b);
-
-	}
-
-};
-#endif // 0
-
-#endif // 0
 
 
 #endif
