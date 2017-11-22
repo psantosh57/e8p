@@ -16,18 +16,28 @@ e8p::e8p(const int s[N][N], const int f[N][N]) : _start(s), _finish(f), _numMove
 
 	if (_start != _finish) {
 
-		unordered_set <board, board::hash> uset;
+		unordered_set <board, Hash> uset;
 		//queue<board*> queue;
 		stack<board*> stack;
 
 		//Push the first board in hash 
 		uset.insert(_start);
+		unordered_set<board, Hash>::const_iterator got = uset.find(_start);
+		unordered_set<board, Hash>::const_iterator not = uset.end();
+		cout << "Num elements = " << uset.size() << endl;
+		if (got == uset.end()) {
+
+			cout << "Dont come here" << endl;
+		}
+		else {
+
+			cout << "Should come here" << endl;
+		}
+
 		int row = 0;
 		int col = 0;
-		findSpace(_start, row, col);
-		popoulateKids(_start, row, col);
-		//unordered_set<board, hash>::const_iterator got = uset.find(_start);
-		pushInStack(_start, stack, uset);
+		findSpaceAndPopulate(_start, row, col);
+		//pushInStack(_start, stack, uset);
 
 		cout << "Here" << endl;
 
@@ -39,6 +49,7 @@ e8p::e8p(const int s[N][N], const int f[N][N]) : _start(s), _finish(f), _numMove
 			board* temp = stack.top();
 			stack.pop();
 			_numMoves++;
+			
 
 			if (*temp == _finish) {
 
@@ -46,19 +57,27 @@ e8p::e8p(const int s[N][N], const int f[N][N]) : _start(s), _finish(f), _numMove
 				
 				break;
 			}
+			else {
+				findSpaceAndPopulate(*temp, row, col);
+				//pushInStack(*temp, stack, uset);
+			}
 
+#if 0
 			if (parent == temp->_parent) {
 
 				_solution = temp->_string;
+				parent = temp;
 
 			}
 			else {
 
 				_solution = _solution + temp->_string;
-				parent = temp;
-			}
 
-			pushInStack(*temp, stack, uset);
+			}
+#endif // 0
+
+
+			
 
 
 		}
@@ -162,7 +181,7 @@ void board::swapRight(int r, int c) {
 }
 
 
-void e8p::findSpace(board& b, int& row, int& column) {
+void e8p::findSpaceAndPopulate(board& b, int& row, int& col) {
 
 	for (int i = 0; i < N; ++i) {
 
@@ -171,11 +190,13 @@ void e8p::findSpace(board& b, int& row, int& column) {
 			if (b._n._matrix[i][j] == 0) {
 
 				row = i;
-				column = j;
+				col = j;
 				break;
 			}
 		}
 	}
+
+	popoulateKids(b, row, col);
 
 }
 
@@ -186,7 +207,7 @@ board* board::createBoard() {
 	return temp;
 }
 
-#if 1
+#if 0
 void e8p::pushInStack(board& b, stack<board*>& stack, unordered_set <board, board::hash>& uset) {
 
 	if (b._up) {
@@ -194,6 +215,7 @@ void e8p::pushInStack(board& b, stack<board*>& stack, unordered_set <board, boar
 		if (got == uset.end()) {
 
 			stack.push(b._up);
+			uset.insert(*b._up);
 
 		}
 
@@ -205,6 +227,7 @@ void e8p::pushInStack(board& b, stack<board*>& stack, unordered_set <board, boar
 		if (got == uset.end()) {
 
 			stack.push(b._down);
+			uset.insert(*b._down);
 
 		}
 	}
@@ -215,6 +238,7 @@ void e8p::pushInStack(board& b, stack<board*>& stack, unordered_set <board, boar
 		if (got == uset.end()) {
 
 			stack.push(b._left);
+			uset.insert(*b._left);
 
 		}
 	}
@@ -225,6 +249,7 @@ void e8p::pushInStack(board& b, stack<board*>& stack, unordered_set <board, boar
 		if (got == uset.end()) {
 
 			stack.push(b._right);
+			uset.insert(*b._right);
 
 		}
 	}

@@ -76,7 +76,7 @@ public:
 	friend class board;
 	friend class e8p;
 
-private:
+//private:
 
 	int _matrix[N][N];
 
@@ -136,9 +136,10 @@ public:
 	void swapLeft(int r, int c);
 	void swapRight(int r, int c);
 
+#if 0
 	struct hash {
 
-		inline size_t operator() (const board& b) const {
+		inline int operator() (const board& b) const {
 
 			int sum = 0;
 
@@ -155,8 +156,10 @@ public:
 		}
 
 	};
+#endif // 0
 
-private:
+
+//private:
 
 	node _n;
 	string _string;
@@ -188,9 +191,9 @@ public:
 	int get_num_moves() const;
 	string get_solution() const;
 	//void pushCombos(queue<board> & q, board& b);
-	void findSpace(board& b, int& row, int& column);
-	void popoulateKids(board& b, int r, int c);
-	void pushInStack(board& b, stack<board*>& s, unordered_set<board, board::hash>& us);
+	void findSpaceAndPopulate(board& b, int& row, int& col);
+	void popoulateKids(board& b, int row, int col);
+	//void pushInStack(board& b, stack<board*>& s, unordered_set<board, board::hash>& us);
 #if 0
 	void swapDown(board& b, int r, int c, queue<board>& q);
 	node* swapUp(board& b, int r, int c);
@@ -208,7 +211,7 @@ public:
 	
 
 #if 0
-	struct hash {
+	struct Hash {
 
 		inline size_t operator() (const board& b) const {
 
@@ -222,7 +225,7 @@ public:
 				}
 			}
 
-			return sum;
+			return (sum);
 
 		}
 
@@ -247,6 +250,38 @@ private:
 
 
 };
+
+#if 1
+
+using namespace std;
+
+struct Hash {
+
+public:
+
+	size_t operator() (const board& b) const {
+
+#if 1
+		int sum = 0;
+
+		for (int i = 0; i < N; ++i) {
+
+			for (int j = 0; j < N; ++j) {
+
+				sum += ((i*N) + j) * b._n._matrix[i][j];
+			}
+		}
+
+		return (sum);
+#endif // 0
+
+		//char* ch = reinterpret_cast<char* const>(&b);
+
+	}
+
+};
+#endif // 0
+
 
 #endif
 //EOF
