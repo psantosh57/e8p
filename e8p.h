@@ -153,10 +153,13 @@ public:
 	board* createBoard();
 	void popoulateKids(int r, int c);
 	//void findSpace(int& row, int& column);
+#if 0
 	void swapDown(int r, int c);
 	void swapUp(int r, int c);
 	void swapLeft(int r, int c);
 	void swapRight(int r, int c);
+#endif // 0
+
 
 #if 1
 	struct hash {
@@ -216,12 +219,12 @@ public:
 	void findSpaceAndPopulate(board& b, int& row, int& col);
 	void popoulateKids(board& b, int row, int col);
 	//void pushInStack(board& b, stack<board*>& s, unordered_set<board, board::hash>& us);
-	void pushInStack(board& b, queue<board*>& s, unordered_set<board, board::hash>& us);
-#if 0
-	void swapDown(board& b, int r, int c, queue<board>& q);
-	node* swapUp(board& b, int r, int c);
-	node* swapLeft(board& b, int r, int c);
-	node* swapRight(board& b, int r, int c);
+	void pushInStack(board& b, queue<board>& s, unordered_set<board, board::hash>& us);
+#if 1
+	void swapDown(board& b, int r, int c);
+	void swapUp(board& b, int r, int c);
+	void swapLeft(board& b, int r, int c);
+	void swapRight(board& b, int r, int c);
 #endif // 0
 
 
@@ -273,6 +276,9 @@ private:
 	int _numMoves;
 	string _solution;
 	bool _foundSolution;
+
+	unordered_set<board, board::hash> _uset;
+	queue<board> _queue;
 
 	
 

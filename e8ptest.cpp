@@ -16,8 +16,7 @@ This file test e8p object
 All includes here
 -----------------------------------------------------------------*/
 #include "e8p.h"
-#include <unordered_set>
-#include <map>
+#include "vld.h"
 
 
 /*----------------------------------------------------------------
@@ -28,7 +27,7 @@ Nothing can be changed in this file
 /*----------------------------------------------------------------
 static to this file
 -----------------------------------------------------------------*/
-//static const int N = 3 ;
+//static const int N = 3;
 
 /*----------------------------------------------------------------
 Declaration of e8ptest class
@@ -197,14 +196,12 @@ static void test1(int s[N][N], const int f[N][N]) {
 main
 -----------------------------------------------------------------*/
 int main() {
-
 	int f[N][N] = { { 1,2,3 },
 	{ 4,5,6 },
 	{ 7,8,0 }
 	};
 
 #if 0
-
 	{
 		int s[N][N] = { { 1,2,3 },
 		{ 4,5,6 },
@@ -213,9 +210,6 @@ int main() {
 		test1(s, f);
 	}
 
-#endif //0
-
-#if 0
 	{
 		int s[N][N] = { { 1,2,3 },
 		{ 4,5,6 },
@@ -223,28 +217,17 @@ int main() {
 		};
 		test1(s, f);
 	}
-#endif // 0
-#if 0
+
 	{
-
-		int s[N][N] = { { 1,2,3 },
-{ 4,5,0 },
-{ 7,8,6 }
+		int s[N][N] = { { 1,8,4 },
+		{ 3,7,0 },
+		{ 5,6,2 }
 		};
-#endif // 0
-
-#if 0
-		int s[N][N] = { { 4,1,3 },
-{ 7,0,5 },
-{ 8,2,6 }
-		};
-
-
 
 
 		test1(s, f);
 	}
-#endif // 0
+#endif //0
 #if 1
 	{
 		const int m = 100;
@@ -273,22 +256,11 @@ int main() {
 		}
 
 	}
+
+#endif //0
 	cout << "If you have solved this problem on your own congratulation\n";
 	cout << "If you have enjoyed this problem, send me a gift card\n";
-
-#endif // 0
-
-#if 0
-	int s[N][N] = { { 1,2,3 },
-{ 4,5,6 },
-{ 7,8,0 }
-	};
-
-	e8p e(s, f);
-
-#endif // 0
-
- 	return 0;
+	return 0;
 }
 
 //EOF
