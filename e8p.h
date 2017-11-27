@@ -23,6 +23,8 @@ All includes here
 
 
 static const int N = 3;
+//class node;
+//static int node::_count;
 
 
 
@@ -34,7 +36,9 @@ public:
 
 	node(const int arr[N][N]) : _matrix{ 0 } {
 
-		//cout << "In node const" << endl;
+		//_count = 0;
+
+		//cout << "In node const - " << _count << endl;
 
 		for (int i = 0; i < N; ++i) {
 
@@ -54,7 +58,8 @@ public:
 #if 1
 	node(const node& n1) {
 
-		//cout << "In node copy const" << endl;
+		//cout << "In node copy const - " << endl;
+		
 
 		for (int i = 0; i < N; ++i) {
 
@@ -87,11 +92,11 @@ public:
 
 	friend class board;
 	friend class e8p;
-
+	static int _count;
 //private:
 
 	int _matrix[N][N];
-
+	
 #if 0
 	node* _up;
 	node* _down;
@@ -101,6 +106,7 @@ public:
 #endif // 0
 
 };
+
 
 
 
@@ -153,11 +159,11 @@ public:
 	board* createBoard();
 	void popoulateKids(int r, int c);
 	//void findSpace(int& row, int& column);
-#if 0
-	void swapDown(int r, int c);
-	void swapUp(int r, int c);
-	void swapLeft(int r, int c);
-	void swapRight(int r, int c);
+#if 1
+	void swapDown1(int r, int c);
+	void swapUp1(int r, int c);
+	void swapLeft1(int r, int c);
+	void swapRight1(int r, int c);
 #endif // 0
 
 
@@ -173,6 +179,28 @@ public:
 				for (int j = 0; j < N; ++j) {
 
 					sum += ((i*N) + j) * b._n._matrix[i][j];
+				}
+			}
+
+			return sum;
+
+		}
+
+	};
+#endif // 0
+
+#if 0
+	struct Hash {
+
+		inline int operator() (const board* b) const {
+
+			int sum = 0;
+
+			for (int i = 0; i < N; ++i) {
+
+				for (int j = 0; j < N; ++j) {
+
+					sum += ((i*N) + j) * (b->_n._matrix[i][j]);
 				}
 			}
 
@@ -219,7 +247,7 @@ public:
 	void findSpaceAndPopulate(board& b, int& row, int& col);
 	void popoulateKids(board& b, int row, int col);
 	//void pushInStack(board& b, stack<board*>& s, unordered_set<board, board::hash>& us);
-	void pushInStack(board& b, queue<board>& s, unordered_set<board, board::hash>& us);
+	//void pushInStack(board& b, queue<board*>& s, unordered_set<board*, board::Hash>& us);
 #if 1
 	void swapDown(board& b, int r, int c);
 	void swapUp(board& b, int r, int c);
@@ -277,8 +305,8 @@ private:
 	string _solution;
 	bool _foundSolution;
 
-	unordered_set<board, board::hash> _uset;
-	queue<board> _queue;
+	unordered_set<board, board::hash> uset;
+	queue<board> queue;
 
 	
 

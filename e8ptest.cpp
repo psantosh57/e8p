@@ -201,15 +201,16 @@ int main() {
 	{ 7,8,0 }
 	};
 
-#if 0
+#if 1
 	{
-		int s[N][N] = { { 1,2,3 },
-		{ 4,5,6 },
-		{ 7,8,0 }
+		int s[N][N] = { { 0,2,3 },
+		{ 1,4,6 },
+		{ 7,5,8 }
 		};
 		test1(s, f);
 	}
-
+#endif //1
+#if 1
 	{
 		int s[N][N] = { { 1,2,3 },
 		{ 4,5,6 },
@@ -217,7 +218,8 @@ int main() {
 		};
 		test1(s, f);
 	}
-
+#endif //0
+#if 1
 	{
 		int s[N][N] = { { 1,8,4 },
 		{ 3,7,0 },
@@ -228,11 +230,12 @@ int main() {
 		test1(s, f);
 	}
 #endif //0
-#if 1
+#if 0
 	{
 		const int m = 100;
 
 		for (int k = 0; k < m; ++k) {
+			cout << "----------- " << k << " ----------" << endl;
 			int a[] = { 0,1,2,3,4,5,6,7,8 };
 			int size = sizeof(a) / sizeof(int);
 			Random r;
