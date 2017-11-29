@@ -23,7 +23,17 @@ e8p::e8p(const int s[N][N], const int f[N][N]) : _start(s), _finish(f), _numMove
 		//stack<board*> stack;
 
 		//Push the first board in hash 
-		uset.insert(_start);
+		//uset.insert(&_start);
+#if 0
+		//uset.insert(&_start);
+		unordered_set<board*, board::Hash>::const_iterator got = uset.find(&_start);
+		if (got == uset.end()) {
+
+			cout << "Dont come here" << endl;
+		}
+#endif // 0
+
+
 		//unordered_set<board, board::hash>::const_iterator got = uset.find(_start);
 
 		int row = 0;
@@ -41,20 +51,20 @@ e8p::e8p(const int s[N][N], const int f[N][N]) : _start(s), _finish(f), _numMove
 
 			//board* temp = stack.top();
 			//stack.pop();
-			board temp = queue.front();
+			board* temp = queue.front();
 			queue.pop();
 
 			_numMoves++;
 
 
-			if (temp == _finish) {
+			if (*temp == _finish) {
 
-				_solution = temp._string;
+				_solution = temp->_string;
 
 				break;
 			}
 			else {
-				findSpaceAndPopulate(temp, row, col);
+				findSpaceAndPopulate(*temp, row, col);
 				//pushInStack(*temp, stack, uset);
 				//pushInStack(*temp, queue, uset);
 			}
@@ -165,6 +175,7 @@ void e8p::popoulateKids(board& b, int r, int c) {
 #if 1
 void e8p::swapDown(board& b, int r, int c) {
 
+#if 0
 	board down = board(b);
 
 	int temp = down._n._matrix[r][c];
@@ -179,15 +190,29 @@ void e8p::swapDown(board& b, int r, int c) {
 		uset.insert(down);
 
 	}
+#endif // 0
 
-#if 0
-	_down = createBoard();
-	_down->_parent = this;
+
+#if 1
+	board* _down = b.createBoard();
 
 	int temp = _down->_n._matrix[r][c];
 	_down->_n._matrix[r][c] = _down->_n._matrix[r + 1][c];
 	_down->_n._matrix[r + 1][c] = temp;
-	_down->_string = _string + "D";
+	_down->_string = b._string + "D";
+
+	unordered_set<board*, board::Hash, board::Compare>::const_iterator got = uset.find(_down);
+	if (got == uset.end()) {
+
+		queue.push(_down);
+		uset.insert(_down);
+
+	}
+	else {
+
+		delete _down;
+	}
+
 #endif // 0
 
 
@@ -206,6 +231,9 @@ void board::swapDown1(int r, int c) {
 	_down->_n._matrix[r][c] = _down->_n._matrix[r + 1][c];
 	_down->_n._matrix[r + 1][c] = temp;
 	_down->_string = _string + "D";
+
+
+
 #endif // 0
 
 
@@ -214,6 +242,7 @@ void board::swapDown1(int r, int c) {
 #if 1
 void e8p::swapUp(board& b, int r, int c) {
 
+#if 0
 	board up = board(b);
 
 	int temp = up._n._matrix[r][c];
@@ -228,15 +257,28 @@ void e8p::swapUp(board& b, int r, int c) {
 		uset.insert(up);
 
 	}
+#endif // 0
 
-#if 0
-	_up = createBoard();
-	_up->_parent = this;
+
+#if 1
+	board* _up = b.createBoard();
 
 	int temp = _up->_n._matrix[r][c];
 	_up->_n._matrix[r][c] = _up->_n._matrix[r - 1][c];
 	_up->_n._matrix[r - 1][c] = temp;
-	_up->_string = _string + "U";
+	_up->_string = b._string + "U";
+
+	unordered_set<board*, board::Hash, board::Compare>::const_iterator got = uset.find(_up);
+	if (got == uset.end()) {
+
+		queue.push(_up);
+		uset.insert(_up);
+
+	}
+	else {
+
+		delete _up;
+	}
 #endif // 0
 
 
@@ -263,6 +305,7 @@ void board::swapUp1(int r, int c) {
 #if 1
 void e8p::swapLeft(board& b, int r, int c) {
 
+#if 0
 	board left = board(b);
 
 	int temp = left._n._matrix[r][c];
@@ -277,15 +320,28 @@ void e8p::swapLeft(board& b, int r, int c) {
 		uset.insert(left);
 
 	}
+#endif // 0
 
-#if 0
-	_left = createBoard();
-	_left->_parent = this;
+
+#if 1
+	board* _left = b.createBoard();
 
 	int temp = _left->_n._matrix[r][c];
 	_left->_n._matrix[r][c] = _left->_n._matrix[r][c - 1];
 	_left->_n._matrix[r][c - 1] = temp;
-	_left->_string = _string + "L";
+	_left->_string = b._string + "L";
+
+	unordered_set<board*, board::Hash, board::Compare>::const_iterator got = uset.find(_left);
+	if (got == uset.end()) {
+
+		queue.push(_left);
+		uset.insert(_left);
+
+	}
+	else {
+
+		delete _left;
+	}
 #endif // 0
 
 
@@ -311,6 +367,7 @@ void board::swapLeft1(int r, int c) {
 #if 1
 void e8p::swapRight(board& b, int r, int c) {
 
+#if 0
 	board right = board(b);
 
 	int temp = right._n._matrix[r][c];
@@ -325,15 +382,28 @@ void e8p::swapRight(board& b, int r, int c) {
 		uset.insert(right);
 
 	}
+#endif // 0
 
-#if 0
-	_right = createBoard();
-	_right->_parent = this;
+
+#if 1
+	board* _right = b.createBoard();
 
 	int temp = _right->_n._matrix[r][c];
 	_right->_n._matrix[r][c] = _right->_n._matrix[r][c + 1];
 	_right->_n._matrix[r][c + 1] = temp;
-	_right->_string = _string + "R";
+	_right->_string = b._string + "R";
+
+	unordered_set<board*, board::Hash, board::Compare>::const_iterator got = uset.find(_right);
+	if (got == uset.end()) {
+
+		queue.push(_right);
+		uset.insert(_right);
+
+	}
+	else {
+
+		delete _right;
+	}
 #endif // 0
 
 
@@ -432,6 +502,7 @@ void e8p::pushInStack(board& b, queue<board*>& stack, unordered_set <board*, boa
 
 
 }
+
 
 #endif // 0
 

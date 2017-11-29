@@ -151,6 +151,11 @@ public:
 		return (_n == b1._n);
 	}
 
+	bool operator==(const board*& b1) {
+		//cout << "In board == (*) operator" << endl;
+		return (_n == b1->_n);
+	}
+
 	bool operator!=(const board& b1) const {
 
 		return !(_n == b1._n);
@@ -167,7 +172,7 @@ public:
 #endif // 0
 
 
-#if 1
+#if 0
 	struct hash {
 
 		inline int operator() (const board& b) const {
@@ -189,10 +194,12 @@ public:
 	};
 #endif // 0
 
-#if 0
+#if 1
 	struct Hash {
 
 		inline int operator() (const board* b) const {
+
+			//cout << "In this Hash function" << endl;
 
 			int sum = 0;
 
@@ -205,6 +212,18 @@ public:
 			}
 
 			return sum;
+
+		}
+
+	};
+
+	struct Compare {
+
+		inline int operator() (const board* b1, const board* b2) const {
+
+			//cout << "In this Compare function" << endl;
+
+			return (b1->_n == b2->_n);
 
 		}
 
@@ -236,7 +255,32 @@ public:
 
 	~e8p() {
 
-		//cout << "In e8p dest" << endl;
+#if 0
+		
+#endif //0
+
+#if 1
+		while (!queue.empty()) {
+
+			board* temp = queue.front();
+			queue.pop();
+			uset.erase(temp);
+			delete temp;
+		}
+
+		unordered_set<board*, board::Hash, board::Compare>::const_iterator got = uset.begin();
+		while (got != uset.end()) {
+
+			delete *got;
+			got++;
+
+		}
+
+#endif // 1
+
+
+		
+
 	}
 
 	e8p(const e8p& from) = delete;
@@ -305,8 +349,8 @@ private:
 	string _solution;
 	bool _foundSolution;
 
-	unordered_set<board, board::hash> uset;
-	queue<board> queue;
+	unordered_set<board*, board::Hash, board::Compare> uset;
+	queue<board*> queue;
 
 	
 
